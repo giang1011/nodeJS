@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form id="calcForm">
+        <label>Number A: <input type="number" id="a" required></label><br>
+        <label>Number B: <input type="number" id="b" required></label><br><br>
+        <button type="button" onclick="calculate('add')">Add</button>
+        <button type="button" onclick="calculate('subtract')">Subtract</button>
+        <button type="button" onclick="calculate('multiply')">Multiply</button>
+        <button type="button" onclick="calculate('divide')">Divide</button>
+    </form>
+    <h2 id="result"></h2>
+
+    <script>
+        function calculate(operation) {
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+
+            fetch(`http://localhost:3000/${operation}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ a, b })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result !== undefined) {
+                    document.getElementById('result').innerText = `Result: ${data.result}`;
+                } else {
+                    document.getElementById('result').innerText = `Error: ${data.error}`;
+                }
+            })
+            .catch(err => {
+                document.getElementById('result').innerText = 'Request failed';
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
