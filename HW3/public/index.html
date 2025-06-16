@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quản lý sản phẩm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Quản lý sản phẩm</h1>
+
+  <fieldset>
+    <legend> Thêm sản phẩm</legend>
+    <form id="addForm">
+      <input name="title" placeholder="Tên sản phẩm" required />
+      <input name="price" type="number" step="0.01" placeholder="Giá" required />
+      <input name="idate" type="date" required />
+      <input name="quantity" type="number" placeholder="Số lượng" required />
+      <button type="submit">Thêm</button>
+    </form>
+  </fieldset>
+
+  <h2> Danh sách sản phẩm</h2>
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Ngày</th>
+        <th>Số lượng</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const tableBody = document.querySelector("#productTable tbody");
+
+    function taiLaiDuLieu() {
+      fetch("http://localhost:3000/products")
+        .then(res => res.json())
+        .then(data => {
+          tableBody.innerHTML = "";
+          data.forEach(p => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${p.id}</td>
+              <td><input value="${p.title}" /></td>
+              <td><input type="number" step="0.01" value="${p.price}" /></td>
+              <td><input type="date" value="${p.idate.split('T')[0]}" /></td>
+              <td><input type="number" value="${p.quantity}" /></td>
+              <td>
+                <button onclick="capNhat(${p.id}, this)">Cập nhật</button>
+                <button class="danger" onclick="xoa(${p.id})">Xoá</button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        });
+    }
+
+    function xoa(id) {
+      fetch("http://localhost:3000/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id=${id}`
+      }).then(taiLaiDuLieu);
+    }
+
+    function capNhat(id, btn) {
+      const row = btn.closest("tr");
+      const inputs = row.querySelectorAll("input");
+      const [title, price, idate, quantity] = [...inputs].map(i => i.value);
+
+      const body = `id=${id}&title=${encodeURIComponent(title)}&price=${price}&idate=${idate}&quantity=${quantity}`;
+      fetch("http://localhost:3000/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+      }).then(taiLaiDuLieu);
+    }
+
+    document.getElementById("addForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new URLSearchParams(new FormData(form));
+      fetch("http://localhost:3000/add", {
+        method: "POST",
+        body: data
+      }).then(() => {
+        form.reset();
+        taiLaiDuLieu();
+      });
+    });
+
+    taiLaiDuLieu();
+  </script>
+</body>
+</html>
