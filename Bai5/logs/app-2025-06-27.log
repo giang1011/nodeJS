@@ -1,0 +1,13 @@
+{"type":"REQUEST","time":"2025-06-27T04:03:12.779Z","method":"GET","url":"/","ip":"::1","message":"Incoming request"}
+{"type":"REQUEST","time":"2025-06-27T04:03:12.803Z","method":"GET","url":"/favicon.ico","ip":"::1","message":"Incoming request"}
+{"type":"REQUEST","time":"2025-06-27T04:03:32.885Z","method":"POST","url":"/api/cars","ip":"::1","message":"Incoming request"}
+{"type":"ERROR","time":"2025-06-27T04:03:32.886Z","method":"POST","url":"/api/cars","ip":"::1","message":"Cannot destructure property 'brand' of 'req.body' as it is undefined."}
+{"type":"REQUEST","time":"2025-06-27T04:04:19.592Z","method":"GET","url":"/","ip":"::1","message":"Incoming request"}
+{"type":"REQUEST","time":"2025-06-27T04:04:21.783Z","method":"GET","url":"/.well-known/appspecific/com.chrome.devtools.json","ip":"::1","message":"Incoming request"}
+{"type":"REQUEST","time":"2025-06-27T04:05:24.188Z","method":"GET","url":"/","ip":"::1","message":"Incoming request"}
+{"type":"REQUEST","time":"2025-06-27T04:05:43.788Z","method":"POST","url":"/api/cars","ip":"::1","message":"Incoming request"}
+{"type":"ERROR","time":"2025-06-27T04:05:43.789Z","method":"POST","url":"/api/cars","ip":"::1","message":"Cannot destructure property 'brand' of 'req.body' as it is undefined."}
+{"type":"REQUEST","time":"2025-06-27T04:05:45.515Z","method":"POST","url":"/api/cars","ip":"::1","message":"Incoming request"}
+{"type":"ERROR","time":"2025-06-27T04:05:45.515Z","method":"POST","url":"/api/cars","ip":"::1","message":"Cannot destructure property 'brand' of 'req.body' as it is undefined."}
+{"type":"REQUEST","time":"2025-06-27T04:11:18.459Z","method":"POST","url":"/api/cars","ip":"::1","body":{"brand":"Toyota","model":"Camry","year":2020},"message":"Incoming request"}
+{"type":"SUCCESS","time":"2025-06-27T04:11:18.482Z","method":"POST","url":"/api/cars","ip":"::1","body":{"brand":"Toyota","model":"Camry","year":2020},"message":"Created new car"}
